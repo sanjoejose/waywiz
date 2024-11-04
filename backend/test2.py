@@ -1,21 +1,21 @@
 # Define the graph with nodes as a matrix of (distance, direction, next node)
 # Example: graph[node] = [(distance, direction, next_node), ...]
 graph = {
-    0: [ ( 1, 'right', 22), (1, 'straight',23)],
-    1: [(1, 'straight', 2)],
-    2: [(1, 'right', 3), (1, 'left', 4), (1, 'straight', 5), (1, 'straight',1)],
-    3: [(1, 'straight', 2)],
-    4: [(1, 'straight', 2)],
-    5: [(1, 'left', 20), (1,'right', 6),(1,'straight',2)],
-    6: [(1, 'straight', 7), (1, 'left', 5)],
-    7: [(1, 'straight', 8), (1, 'straight', 6)],
-    8: [(1, 'straight', 7), (1, 'straight', 9), (1, 'straight', 10)],
-    9: [(1, 'right', 8), (1, 'straight', 10)],
-    10: [(1, 'straight', 9), (1, 'left', 8)],
-    20: [ (1, 'right', 5), (1, 'straight', 21)],
-    21: [ ( 1, 'straight', 20), (1, 'straight', 22)],
-    22: [ ( 1, 'straight', 21), (1, 'straight', 23), (1, 'straight', 0)],
-    23: [ ( 1, 'left', 22), (1, 'straight',0)]
+    0: [ ( 1136, 'right', 22), (250, 'straight',23)],
+    1: [(1175, 'straight', 2)],
+    2: [(1032, 'right', 3), (1032, 'left', 4), (775, 'straight', 5), (1175, 'straight',1)],
+    3: [(1032, 'straight', 2)],
+    4: [(1032, 'straight', 2)],
+    5: [(250, 'left', 20), (250,'right', 6),(775,'straight',2)],
+    6: [(880, 'straight', 7), (250, 'left', 5)],
+    7: [(523, 'straight', 8), (880, 'straight', 6)],
+    8: [(523, 'straight', 7), (1136, 'straight', 9), (1050, 'straight', 10)],
+    9: [(1136, 'right', 8), (250, 'straight', 10)],
+    10: [(250, 'straight', 9), (1050, 'left', 8)],
+    20: [ (250, 'right', 5), (880, 'straight', 21)],
+    21: [ ( 880, 'straight', 20), (350, 'straight', 22)],
+    22: [ ( 350, 'straight', 21), (1136, 'straight', 23), (1136, 'straight', 0)],
+    23: [ ( 1136, 'left', 22), (250, 'straight',0)]
 }
 
 def shortest_path(graph, start, end):
