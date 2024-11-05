@@ -49,3 +49,10 @@ button {
     font-size: 1rem;
     color: rgb(142, 162, 218);
 }
+
+
+.destination-message {
+    color: rgb(164, 215, 124); /* Change to your desired color */
+    font-weight: bold; /* Optional: make the text bold */
+    font-size: larger;
+}
