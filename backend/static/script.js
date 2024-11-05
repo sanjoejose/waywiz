@@ -29,7 +29,7 @@ document.getElementById('pathForm').addEventListener('submit', async function(ev
         } else {
             pathInfo.innerHTML = `
                 <p>Shortest Path: ${data.path.join(' -> ')}</p>
-                <p>Total Distance: ${data.distance}</p>
+                <p>Total Distance: ${data.distance/100}m</p>
             `;
             
             let directions = data.directions;
