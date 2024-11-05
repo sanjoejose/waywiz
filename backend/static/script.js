@@ -42,7 +42,7 @@ document.getElementById('pathForm').addEventListener('submit', async function(ev
                     speak(directionText); // Call speak function for audio guidance
                     currentStepIndex++;
                 } else {
-                    currentStep.innerHTML = 'You have reached your destination!';
+                    currentStep.innerHTML = '<span class="destination-message">You have reached your destination!</span>';
                     speak('You have reached your destination!');
                     nextButton.style.display = 'none';
                 }
