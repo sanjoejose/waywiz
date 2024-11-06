@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylelogin.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-box">
+                    <input type="email" id="loginEmail" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="loginPassword" required>
+                    <label>Password</label>
+                </div>
+                <div class="forgot-pass">
+                    <a href="#">Forgot your password?</a>
+                </div>
+                <button type="submit" class="btn" id="ruser">Login</button>
+                <a href="{{ url_for('sign_up') }}" class="signup-link">Sign Up</a>
+            </form>
+        </div>
+         <!-- Animated background spans (visual effects) -->
+     <span style="--i:0;"></span>
+     <span style="--i:1;"></span>
+     <span style="--i:2;"></span>
+     <span style="--i:3;"></span>
+     <span style="--i:4;"></span>
+     <span style="--i:5;"></span>
+     <span style="--i:6;"></span>
+     <span style="--i:7;"></span>
+     <span style="--i:8;"></span>
+     <span style="--i:9;"></span>
+     <span style="--i:10;"></span>
+     <span style="--i:11;"></span>
+     <span style="--i:12;"></span>
+     <span style="--i:13;"></span>
+     <span style="--i:14;"></span>
+     <span style="--i:15;"></span>
+     <span style="--i:16;"></span>
+     <span style="--i:17;"></span>
+     <span style="--i:18;"></span>
+     <span style="--i:19;"></span>
+     <span style="--i:20;"></span>
+     <span style="--i:21;"></span>
+     <span style="--i:22;"></span>
+     <span style="--i:23;"></span>
+     <span style="--i:24;"></span>
+     <span style="--i:25;"></span>
+     <span style="--i:26;"></span>
+     <span style="--i:27;"></span>
+     <span style="--i:28;"></span>
+     <span style="--i:29;"></span>
+     <span style="--i:30;"></span>
+     <span style="--i:31;"></span>
+     <span style="--i:32;"></span>
+     <span style="--i:33;"></span>
+     <span style="--i:34;"></span>
+     <span style="--i:35;"></span>
+     <span style="--i:36;"></span>
+     <span style="--i:37;"></span>
+     <span style="--i:38;"></span>
+     <span style="--i:39;"></span>
+     <span style="--i:40;"></span>
+     <span style="--i:41;"></span>
+     <span style="--i:42;"></span>
+     <span style="--i:43;"></span>
+     <span style="--i:44;"></span>
+     <span style="--i:45;"></span>
+     <span style="--i:46;"></span>
+     <span style="--i:47;"></span>
+     <span style="--i:48;"></span>
+     <span style="--i:49;"></span>
+     </div>
+    </div>
+
+    <!-- <script src="/static/scriptlogin.js" type="module"></script> -->
+
+</body>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, get, ref, child } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBdrhRx3XTT2tG5LRTdomCQeInVS3LFlrE",
+    authDomain: "waywiz-b2334.firebaseapp.com",
+    projectId: "waywiz-b2334",
+    storageBucket: "waywiz-b2334.firebasestorage.app",
+    messagingSenderId: "958400511753",
+    appId: "1:958400511753:web:d5b5d80efd66ea8749ddd8"
+};
+          
+const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Select form elements
+        const emailField = document.getElementById("loginEmail");
+        const passwordField = document.getElementById("loginPassword");
+
+        // Prevent default form submission and handle login
+        document.getElementById("loginForm").addEventListener("submit", (event) => {
+            event.preventDefault(); 
+
+            console.log("Attempting login...");
+            signInWithEmailAndPassword(auth, emailField.value, passwordField.value)
+                .then((credentials) => {
+                    console.log("Login successful:", credentials);
+                    auth.currentUser.getIdToken()
+                        .then((idToken) => {
+                            console.log("ID token obtained:", idToken);
+                            window.location.href = "{{ url_for('toggle') }}"; // Redirect upon successful login
+                        })
+                        .catch((error) => {
+                            console.error("Error getting ID token:", error);
+                        });
+                })
+                .catch((error) => {
+                    alert("Login failed: " + error.message);
+                    console.error("Error signing in:", error.code, error.message);
+                });
+        });
+
+</script>
+</html>

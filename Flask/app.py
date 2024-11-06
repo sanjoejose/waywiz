@@ -60,8 +60,32 @@ def get_shortest_path():
     })
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('land.html')  # Your main HTML page
+
+@app.route('/select')
+def select():
+    return render_template('sam.html')
+
+@app.route('/staff-login')
+def staff_login():
+    return render_template('login.html')
+
+@app.route('/path-finder')
+def path_finder():
+    return render_template('path.html')
+
+@app.route('/availability-status')
+def availability_status():
+    return render_template('availability-status.html')
+
+@app.route('/toggle')
+def toggle():
+    return render_template('tog.html')
+
+@app.route('/sign-up')
+def sign_up():
+    return render_template('signup.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
