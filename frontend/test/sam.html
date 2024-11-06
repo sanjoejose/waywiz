@@ -14,7 +14,7 @@
         
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg,  #1f293a, #2c4766);
+            background: linear-gradient(135deg, #1f293a, #2c4766);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,37 +23,32 @@
             color: #333;
         }
 
-        /* Header styling */
         .header {
             font-size: 50px;
             font-weight: bold;
             text-align: center;
-           font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             letter-spacing: 3px;
             background: linear-gradient(90deg, #efeeed, #f4f3f2, #f8f7f7);
             -webkit-background-clip: text;
             color: transparent;
-     
             margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* Icon image styling */
         .header img {
-            width:300px;
+            width: 300px;
             height: 300px;
         }
 
-        /* Container styling */
         .container {
             width: 90%;
             max-width: 400px;
             margin: 20px auto;
         }
 
-        /* Card styling */
         .card {
             background-color: #fff;
             border-radius: 15px;
@@ -67,16 +62,15 @@
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
         }
 
-        /* Icon styling */
         .icon {
             font-size: 40px;
             color: #007bff;
             margin-bottom: 10px;
         }
 
-        /* Title styling */
         .title {
             font-size: 20px;
             font-weight: bold;
@@ -84,46 +78,50 @@
             margin-bottom: 10px;
         }
 
-        /* Responsive for smaller screens */
         @media (max-width: 500px) {
-            .card {
-                padding: 20px 15px;
-            }
             .header img {
-            width:200px;
-            height: 200px;
-        }
+                width: 200px;
+                height: 200px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- App Name Header with Icon -->
     <div class="header">
-        <img src="waywiz.png" alt="Waywiz Icon"> 
-        
+        <img src="waywiz.png" alt="Waywiz Icon">
     </div>
-   
 
     <div class="container">
-        <!-- First Section -->
-        <div class="card">
+        <div class="card" id="staffLogin">
             <div class="icon">👥</div>
             <div class="title">Staff Login</div>
         </div>
 
-        <!-- Second Section -->
-        <div class="card">
+        <div class="card" id="pathFinder">
             <div class="icon">🧭</div>
             <div class="title">Path Finder</div>
         </div>
 
-        <!-- Third Section -->
-        <div class="card">
+        <div class="card" id="availabilityStatus">
             <div class="icon">📍</div>
             <div class="title">Availability Status</div>
         </div>
     </div>
 
+    <script>
+        // Add event listeners for each card
+        document.getElementById("staffLogin").addEventListener("click", function() {
+            window.location.href = "staff-login.html";
+        });
+
+        document.getElementById("pathFinder").addEventListener("click", function() {
+            window.location.href = "path-finder.html";
+        });
+
+        document.getElementById("availabilityStatus").addEventListener("click", function() {
+            window.location.href = "availability-status.html";
+        });
+    </script>
 </body>
 </html>
