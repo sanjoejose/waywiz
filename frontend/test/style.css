@@ -1,22 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins' , sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
-body{
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background: #1f293a;
+    overflow: hidden; /* Prevent scroll if content is centered */
 }
 
 .container {
-    position: relative;
+    position: fixed; /* Fixed positioning to keep centered */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centering with transform */
     width: 256px;
     height: 256px;
     display: flex;
@@ -32,33 +36,29 @@ body{
     background: #2c4766;
     border-radius: 8px;
     transform-origin: 128px;
-    transform: scale(2.2) rotate(calc(var(--i)*(360deg / 50)));
+    transform: scale(2.2) rotate(calc(var(--i) * (360deg / 50)));
     animation: animateBlink 3s linear infinite;
-    animation-delay: calc(var(--i)* (3s / 50));
-    
+    animation-delay: calc(var(--i) * (3s / 50));
 }
 
 @keyframes animateBlink {
     0% {
         background: #0ef;
     }
-
-    25%{
+    25% {
         background: #2c4766;
-
     }
 }
 
-.login-box{
+.login-box {
     position: absolute;
-    width:  400px;
-    /* background: red; */
+    width: 100%;
+    max-width: 360px; /* Slightly narrower to fit inside circle */
 }
 
-.login-box form{
+.login-box form {
     width: 100%;
-    padding: 0 50px;
-
+    padding: 0 20px; /* Increase padding to center inputs within form */
 }
 
 h2 {
@@ -69,12 +69,13 @@ h2 {
 
 .input-box {
     position: relative;
-    margin: 25px 0;
+    margin: 20px 0;
 }
 
 .input-box input {
     width: 100%;
-    height: 50px;
+    max-width: 280px; /* Longer width but still within circle */
+    height: 45px;
     background: transparent;
     border: 2px solid #2c4766;
     outline: none;
@@ -90,7 +91,6 @@ h2 {
     border-color: #0ef;
 }
 
-
 .input-box label {
     position: absolute;
     top: 50%;
@@ -101,8 +101,8 @@ h2 {
     pointer-events: none;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label {
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
     top: 1px;
     font-size: .8em;
     background: #1f293a;
@@ -110,7 +110,7 @@ h2 {
     color: #0ef;
 }
 
-.forgot-pass{
+.forgot-pass {
     margin: -15px 0 10px;
     text-align: center;
 }
@@ -124,15 +124,10 @@ h2 {
 .forgot-pass a:hover {
     text-decoration: underline;
 }
-.centre {
-    margin: 0;
-    position: absolute;
-    left: 20%;
 
-
-}
 .btn {
     width: 100%;
+    max-width: 280px; /* Align with input field width */
     height: 45px;
     background: #0ef;
     border: none;
@@ -145,27 +140,34 @@ h2 {
 }
 
 .signup-link {
-    margin: 20px 0 10px 100px;
+    display: block;
     text-align: center;
-    background-color: #1f293a;
-    color: #fff;
-}
-
-.signup-link a {
     font-size: 1em;
-    color:#0ef;
-    background-color: #1f293a;
+    color: #0ef;
     text-decoration: none;
     font-weight: 600;
+    margin-top: 15px; /* Add space between button and link */
 }
 
-.signup-link a :hover {
+.signup-link:hover {
     text-decoration: underline;
 }
 
 @media (max-width: 480px) {
+    .container {
+        width: 220px;
+        height: 220px;
+    }
+
+    .container span {
+        width: 20px;
+        height: 5px;
+        transform-origin: 110px;
+        transform: scale(2) rotate(calc(var(--i) * (360deg / 50)));
+    }
+
     h2 {
-        font-size: 1.2em;
+        font-size: 1.4em;
     }
 
     .input-box {
@@ -173,33 +175,20 @@ h2 {
     }
 
     .input-box input {
-        height: 35px;
+        height: 40px;
         font-size: 0.85em;
     }
 
     .input-box label {
         font-size: 0.85em;
     }
-    
-    .container span {
-        position: absolute;
-        left: 45px;
-        width: 30px;
-        height: 6px;
-        background: #2c4766;
-        border-radius: 8px;
-        transform-origin: 128px;
-        transform: scale(2.2) rotate(calc(var(--i)*(360deg / 50)));
-        animation: animateBlink 3s linear infinite;
-        animation-delay: calc(var(--i)* (3s / 50));
-        
-    }
+
     .forgot-pass a {
         font-size: 0.8em;
     }
 
     .btn {
-        height: 35px;
+        height: 40px;
         font-size: 0.85em;
     }
 
