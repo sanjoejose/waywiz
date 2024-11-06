@@ -27,7 +27,7 @@ body, html {
 
 /* Logo styling */
 .logo {
-    width: 100px; /* Adjust size as needed */
+    width: 500px; /* Adjust size as needed */
     max-width: 60%;
     height: auto;
 }
@@ -35,7 +35,7 @@ body, html {
 /* Text reveal styling */
 .reveal-text {
     margin-top: 20px;
-    font-size: 0.2em;
+    font-size: 3em;
     font-family: 'Bebas Neue', sans-serif;
     color: rgb(188, 224, 238);
     overflow: hidden;
