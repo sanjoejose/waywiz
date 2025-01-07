@@ -5,39 +5,39 @@ app = Flask(__name__)
 
 # Define the graph
 graph = {
-    0: [ ( 1136, 'right', 22), (250, 'straight',23)],
-    1: [(1175, 'straight', 2)],
-    2: [(1032, 'right', 3), (1032, 'left', 4), (775, 'straight', 5), (1175, 'straight',1)],
-    3: [(1032, 'straight', 2)],
-    4: [(1032, 'straight', 2)],
-    5: [(250, 'left', 20), (250,'right', 6),(775,'straight',2)],
-    6: [(880, 'straight', 7), (250, 'left', 5)],
-    7: [(523, 'straight', 8), (880, 'straight', 6)],
-    8: [(523, 'straight', 7), (1136, 'straight', 9), (1050, 'straight', 10)],
-    9: [(1136, 'right', 8), (250, 'straight', 10)],
-    10: [(250, 'straight', 9), (1050, 'left', 8)],
-    20: [ (250, 'right', 5), (880, 'straight', 21)],
-    21: [ ( 880, 'straight', 20), (350, 'straight', 22)],
-    22: [ ( 350, 'straight', 21), (1136, 'straight', 23), (1136, 'straight', 0)],
-    23: [ ( 1136, 'left', 22), (250, 'straight',0)]
+    100: [ ( 1136, 'right', 22), (250, 'straight',23)],
+    101: [(1175, 'straight', 2)],
+    102: [(1032, 'right', 3), (1032, 'left', 4), (775, 'straight', 5), (1175, 'straight',1)],
+    103: [(1032, 'straight', 2)],
+    104: [(1032, 'straight', 2)],
+    105: [(250, 'left', 20), (250,'right', 6),(775,'straight',2)],
+    106: [(880, 'straight', 7), (250, 'left', 5)],
+    107: [(523, 'straight', 8), (880, 'straight', 6)],
+    108: [(523, 'straight', 7), (1136, 'straight', 9), (1050, 'straight', 10)],
+    109: [(1136, 'right', 8), (250, 'straight', 10)],
+    110: [(250, 'straight', 9), (1050, 'left', 8)],
+    120: [ (250, 'right', 5), (880, 'straight', 21)],
+    121: [ ( 880, 'straight', 20), (350, 'straight', 22)],
+    122: [ ( 350, 'straight', 21), (1136, 'straight', 23), (1136, 'straight', 0)],
+    123: [ ( 1136, 'left', 22), (250, 'straight',0)]
 }
 
 graph2 = {
-    100: [ (350, 'right', 136), (875, 'straight',135)],
-    136: [ (700,'straight',137),(350,'straight',0)],
-    137: [ (700,'straight',136)],
-    135: [ (875,'straight',0),(523,'straight',134)],
-    134: [ (523,'straight',135),(150,'straight',133)],
-    133: [ (150,'straight',134),(1400,'straight',132)],
-    132: [ (625,'straight',4),(1400,'straight',133),(1050,'straight',126)],
-    4: [ (625,'straight',132)],
-    126: [(625,'straight',3),(1050,'straight',132),(1050,'straight',127)],
-    3: [ (625,'straight',126)],
-    127: [ (150,'straight',128),(1050,'straight',126)],
-    128: [(150,'straight',127),(529,'straight',129)],
-    129: [(875,'straight',110),(529,'straight',128)],
-    110: [(875,'straight',129),(1050,'straight',130)],
-    130: [(1050,'straight',110)]
+    200: [ (350, 'right', 236), (875, 'straight',235)],
+    236: [ (700,'straight',237),(350,'straight',200)],
+    237: [ (700,'straight',236)],
+    235: [ (875,'straight',200),(523,'straight',234)],
+    234: [ (523,'straight',235),(150,'straight',233)],
+    233: [ (150,'straight',234),(1400,'straight',232)],
+    232: [ (625,'straight',204),(1400,'straight',233),(1050,'straight',226)],
+    204: [ (625,'straight',232)],
+    226: [(625,'straight',203),(1050,'straight',232),(1050,'straight',227)],
+    203: [ (625,'straight',226)],
+    227: [ (150,'straight',228),(1050,'straight',226)],
+    228: [(150,'straight',227),(529,'straight',229)],
+    229: [(875,'straight',210),(529,'straight',228)],
+    210: [(875,'straight',229),(1050,'straight',230)],
+    230: [(1050,'straight',210)]
 }
 
 # Shortest path function
