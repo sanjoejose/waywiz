@@ -22,6 +22,24 @@ graph = {
     23: [ ( 1136, 'left', 22), (250, 'straight',0)]
 }
 
+graph2 = {
+    100: [ (350, 'right', 136), (875, 'straight',135)],
+    136: [ (700,'straight',137),(350,'straight',0)],
+    137: [ (700,'straight',136)],
+    135: [ (875,'straight',0),(523,'straight',134)],
+    134: [ (523,'straight',135),(150,'straight',133)],
+    133: [ (150,'straight',134),(1400,'straight',132)],
+    132: [ (625,'straight',4),(1400,'straight',133),(1050,'straight',126)],
+    4: [ (625,'straight',132)],
+    126: [(625,'straight',3),(1050,'straight',132),(1050,'straight',127)],
+    3: [ (625,'straight',126)],
+    127: [ (150,'straight',128),(1050,'straight',126)],
+    128: [(150,'straight',127),(529,'straight',129)],
+    129: [(875,'straight',110),(529,'straight',128)],
+    110: [(875,'straight',129),(1050,'straight',130)],
+    130: [(1050,'straight',110)]
+}
+
 # Shortest path function
 def shortest_path(graph, start, end):
     queue = [(0, start, [], [])]
