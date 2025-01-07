@@ -41,7 +41,7 @@ signupbtn.addEventListener("click", function (e) {
         .then((userCredential) => {
             // Signed up 
             const user = userCredential.user;
-            window.location.href = 'index1.html';  // Redirect after successful login
+            window.location.href = "{{ url_for('sign_up') }}";  // Redirect after successful login
         })
         .catch((error) => {
             const errorCode = error.code;

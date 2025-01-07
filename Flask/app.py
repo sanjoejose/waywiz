@@ -9,7 +9,7 @@ graph = {
     1: [(1175, 'straight', 2)],
     2: [(1032, 'right', 3), (1032, 'left', 4), (775, 'straight', 5), (1175, 'straight',1)],
     3: [(1032, 'straight', 2)],
-    4: [(1032, 'straight', 2)],
+    4: [(1032, 'straight', 2), (250, 'left', 0)],
     5: [(250, 'left', 20), (250,'right', 6),(775,'straight',2)],
     6: [(880, 'straight', 7), (250, 'left', 5)],
     7: [(523, 'straight', 8), (880, 'straight', 6)],
