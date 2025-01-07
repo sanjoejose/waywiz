@@ -4,8 +4,8 @@ import heapq
 app = Flask(__name__)
 
 # Define the graph
-graph = {
-    100: [ ( 1136, 'right', 122), (250, 'straight',123) (200, 'up',200)],
+g1 = {
+    100: [ ( 1136, 'right', 122), (250, 'straight',123), (200, 'up',200)],
     101: [(1175, 'straight', 102)],
     102: [(1032, 'right', 103), (1032, 'left', 104), (775, 'straight', 105), (1175, 'straight',101)],
     103: [(1032, 'straight', 102), (200, 'up', 203)],
@@ -22,7 +22,7 @@ graph = {
     123: [ ( 1136, 'left', 122), (250, 'straight',100)]
 }
 
-graph2 = {
+g2 = {
     200: [ (350, 'right', 236), (875, 'straight',235), (200, 'down',100)],
     236: [ (700,'straight',237),(350,'straight',200)],
     237: [ (700,'straight',236)],
@@ -40,6 +40,7 @@ graph2 = {
     230: [(1050,'straight',210)]
 }
 
+unified_graph = {**g1, **g2}
 # Shortest path function
 def shortest_path(graph, start, end):
     queue = [(0, start, [], [])]
@@ -62,14 +63,15 @@ def shortest_path(graph, start, end):
                 heapq.heappush(queue, (cost + distance, next_node, path, directions + [direction]))
     
     return float("inf"), [], []
+print(shortest_path(unified_graph,107,235))
 
 # API endpoint
-@app.route('/shortest-path', methods=['POST'])
+@app.route('/shortest-path', methods=['POST']) 
 def get_shortest_path():
     data = request.json
     start = int(data.get('start'))
     end = int(data.get('end'))
-    total_distance, path_taken, directions_taken = shortest_path(graph, start, end)
+    total_distance, path_taken, directions_taken = shortest_path(unified_graph, start, end)
     
     return jsonify({
         'distance': total_distance,
