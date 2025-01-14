@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <style>
+        /* Reset and basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0a0a35;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            background: #abb2b8;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #086394;
+        }
+        #camera {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid #0077b6;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #e8f7ff;
+            color: #0077b6;
+            font-size: 1.1em;
+            word-wrap: break-word;
+        }
+        #result.success {
+            background-color: #d4f7dc;
+            color: #2e7d32;
+        }
+        .instructions {
+            color: #c41b1b;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 20px;
+            }
+            #result {
+                font-size: 1em;
+            }
+            .instructions {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Scanner</h1>
+        <video id="camera" autoplay></video>
+        <div id="result">Awaiting QR code scan...</div>
+        <p class="instructions">Hold a QR code in front of your camera. The result will appear here.</p>
+    </div>
+
+    <!-- Include jsQR library -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <script>
+        const video = document.getElementById('camera');
+        const resultDiv = document.getElementById('result');
+
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(stream => {
+                video.srcObject = stream;
+                video.setAttribute('playsinline', true); // iOS compatibility
+                requestAnimationFrame(scanQR);
+            })
+            .catch(err => {
+                resultDiv.textContent = 'Error accessing the camera: ' + err;
+                resultDiv.classList.remove('success');
+            });
+        }
+
+        function scanQR() {
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const context = canvas.getContext('2d');
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                
+                if (code) {
+                    resultDiv.textContent = `QR Code Data: ${code.data}`;
+                    resultDiv.classList.add('success');
+                    setTimeout(() => {
+                        requestAnimationFrame(scanQR);
+                    }, 6000); // Delay before next scan
+                    return;
+                } else {
+                    resultDiv.textContent = "No QR code detected. Keep scanning...";
+                    resultDiv.classList.remove('success');
+                }
+            }
+            requestAnimationFrame(scanQR);
+        }
+
+        // Start the camera when the page loads
+        startCamera();
+    </script>
+</body>
+</html>
