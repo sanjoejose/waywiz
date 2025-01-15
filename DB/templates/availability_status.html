@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Availability Status</title>
+    <style>
+        .available {
+            color: green;
+            font-weight: bold;
+        }
+        .unavailable {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Availability Status</h1>
+    <label for="staffDropdown">Select Staff Member:</label>
+    <select id="staffDropdown">
+        <option value="" selected disabled>-- Select a staff member --</option>
+        {% for staff in staff_data %}
+            <option value="{{ staff.name }}" class="{% if staff.availability == 1 %}available{% else %}unavailable{% endif %}">
+                {{ staff.name }}
+            </option>
+        {% endfor %}
+    </select>
+</body>
+</html>
