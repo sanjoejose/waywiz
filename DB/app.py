@@ -88,6 +88,14 @@ def get_db_connection():
         database='campus_navigation'
     )
     return conn
+# def get_db_connection():
+#     conn = mysql.connector.connect(
+#         host='waywiz.mysql.pythonanywhere-services.com',
+#         user='waywiz',
+#         password='4321@Wiz',
+#         database='waywiz$campus_navigation'
+#     )
+#     return conn
 
 # Route for Home Page
 @app.route('/')
