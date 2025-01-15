@@ -4,27 +4,196 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Availability Status</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+        }
+
+        .dropdown-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 5px;
+        }
+
+        .dropdown-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
         .available {
             color: green;
             font-weight: bold;
         }
+
         .unavailable {
             color: red;
             font-weight: bold;
         }
+
+        .staff-info {
+            margin-top: 20px;
+            font-size: 1rem;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .staff-info p {
+            margin: 5px 0;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <h1>Availability Status</h1>
-    <label for="staffDropdown">Select Staff Member:</label>
-    <select id="staffDropdown">
-        <option value="" selected disabled>-- Select a staff member --</option>
-        {% for staff in staff_data %}
-            <option value="{{ staff.name }}" class="{% if staff.availability == 1 %}available{% else %}unavailable{% endif %}">
-                {{ staff.name }}
-            </option>
-        {% endfor %}
-    </select>
+    <div class="container">
+        <h1>Availability Status</h1>
+        <form method="POST" action="/availability_status">
+            <div class="dropdown-container">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchBar" 
+                    placeholder="Search and select a staff member..." 
+                    oninput="filterDropdown()">
+                <div class="dropdown-menu" id="dropdownMenu">
+                    {% for staff in staff_data %}
+                    <div 
+                        class="dropdown-item {% if staff.availability == 1 %}available{% else %}unavailable{% endif %}" 
+                        onclick="selectStaff('{{ staff.name }}')">
+                        {{ staff.name }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <input type="hidden" name="staff_name" id="selectedStaff">
+            <button type="submit">Show Details</button>
+        </form>
+
+        {% if selected_staff %}
+        <div class="staff-info">
+            <p><strong>Name:</strong> {{ selected_staff.name }}</p>
+            <p><strong>Room:</strong> {{ selected_staff.room }}</p>
+            <p><strong>Availability:</strong> 
+                {% if selected_staff.availability == 1 %}
+                    <span class="available">Available</span>
+                {% else %}
+                    <span class="unavailable">Unavailable</span>
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const searchBar = document.getElementById('searchBar');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const selectedStaffInput = document.getElementById('selectedStaff');
+
+        // Show or hide the dropdown menu based on input
+        searchBar.addEventListener('focus', () => {
+            dropdownMenu.style.display = 'block';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown-container')) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+
+        function filterDropdown() {
+            const query = searchBar.value.toLowerCase();
+            const items = dropdownMenu.getElementsByClassName('dropdown-item');
+
+            for (let item of items) {
+                if (item.textContent.toLowerCase().includes(query)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            }
+        }
+
+        function selectStaff(name) {
+            searchBar.value = name;
+            selectedStaffInput.value = name;
+            dropdownMenu.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
