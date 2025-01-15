@@ -99,16 +99,18 @@ h2 {
     font-size: 1em;
     color: #fff;
     pointer-events: none;
+    transition: 0.3s;
 }
 
 .input-box input:focus ~ label,
 .input-box input:valid ~ label {
-    top: 1px;
-    font-size: .8em;
+    top: -10px;
+    font-size: 0.8em;
     background: #1f293a;
     padding: 0 6px;
     color: #0ef;
 }
+
 
 .forgot-pass {
     margin: -15px 0 10px;
