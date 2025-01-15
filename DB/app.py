@@ -118,17 +118,33 @@ def login():
     return render_template('login.html')  # Show the login form
 
 # Route for Availability Status Page
-@app.route('/availability_status')
+@app.route('/availability_status', methods=['GET', 'POST'])
 def availability_status():
-    # Fetch staff names and their availability
+    # Connect to the database
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
+
+    if request.method == 'POST':
+        # Get selected staff name from the form
+        selected_name = request.form['staff_name']
+        cursor.execute("SELECT name, room, availability FROM staff WHERE name = %s", (selected_name,))
+        selected_staff = cursor.fetchone()
+    else:
+        selected_staff = None
+
+    # Fetch all staff names and availability for the dropdown
     cursor.execute("SELECT name, availability FROM staff")
     staff_data = cursor.fetchall()
+
     conn.close()
 
-    # Pass staff data to the template
-    return render_template('availability_status.html', staff_data=staff_data)
+    # Pass data to the template
+    return render_template(
+        'availability_status.html',
+        staff_data=staff_data,
+        selected_staff=selected_staff
+    )
+
 
 # Route for Updating Availability
 @app.route('/update_availability', methods=['POST'])
