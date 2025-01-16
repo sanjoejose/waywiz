@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Success</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script>
+        // Global variable to store the QR code data (new location)
+        let newLocation = null;
+
         // Function to toggle availability
         async function toggleAvailability(collegeId) {
             const toggleButton = document.getElementById('availabilityToggle');
@@ -31,6 +35,61 @@
                 alert('An error occurred while updating availability.');
             }
         }
+
+        // QR Code Scanner Functions
+        let cameraStream;
+
+        async function startQrScanner() {
+            const camera = document.getElementById('camera');
+            const scanMessage = document.getElementById('scanMessage');
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                cameraStream = stream;
+                camera.srcObject = stream;
+                camera.style.display = 'block';
+                scanMessage.textContent = 'Scanning for QR code...';
+                requestAnimationFrame(scanQrCode);
+            } catch (err) {
+                alert('Error accessing the camera: ' + err.message);
+            }
+        }
+
+        function stopQrScanner() {
+            const camera = document.getElementById('camera');
+            if (cameraStream) {
+                const tracks = cameraStream.getTracks();
+                tracks.forEach(track => track.stop());
+            }
+            camera.style.display = 'none';
+        }
+
+        function scanQrCode() {
+            const camera = document.getElementById('camera');
+            const canvas = document.createElement('canvas');
+            const scanMessage = document.getElementById('scanMessage');
+
+            if (camera.readyState === camera.HAVE_ENOUGH_DATA) {
+                canvas.width = camera.videoWidth;
+                canvas.height = camera.videoHeight;
+                const context = canvas.getContext('2d');
+                context.drawImage(camera, 0, 0, canvas.width, canvas.height);
+
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                if (code) {
+                    stopQrScanner();
+                    newLocation = code.data; /////////////// Store the QR code data in the global variable
+                    updateLocation(newLocation);
+                    return;
+                }
+            }
+
+            requestAnimationFrame(scanQrCode);
+        }
+
+        
     </script>
 </head>
 <body>
@@ -39,7 +98,7 @@
     <p><strong>Name:</strong> {{ user.name }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
     <p><strong>Role:</strong> {{ user.role }}</p>
-    <p><strong>Location:</strong> {{ user.location }}</p>
+    <p><strong>Location:</strong> <span id="location">{{ user.location }}</span></p>
 
     <label for="availabilityToggle">
         <strong>Availability:</strong>
@@ -50,7 +109,10 @@
         onchange="toggleAvailability('{{ user.college_id }}')"
         {{ 'checked' if user.availability == 1 else '' }}
     />
-
     <p>Toggle the above button to change your availability status.</p>
+
+    <button onclick="startQrScanner()">Scan QR Code to Update Location</button>
+    <video id="camera" style="display:none; width: 100%; max-height: 300px; margin-top: 10px; border-radius: 5px; border: 2px solid #0077b6;" autoplay></video>
+    <p id="scanMessage" style="margin-top: 10px;">Awaiting QR code scan...</p>
 </body>
 </html>
