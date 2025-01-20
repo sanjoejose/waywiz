@@ -8,20 +8,22 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f9f9f9;
+            background-color: #002a5c; /* Dark blue background */
+            color: white; /* White text for contrast */
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            color: #333;
+            min-height: 100vh;
+            box-sizing: border-box;
+            text-align: center;
         }
 
         h1 {
-            font-size: 2.5rem;
-            color: #007bff;
+            font-size: 2.2rem;
+            color: #085e5b;
             margin-bottom: 20px;
         }
 
@@ -29,9 +31,11 @@
             width: 100%;
             max-width: 500px;
             background: #fff;
+            color: #002a5c;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px 30px;
+            padding: 20px;
+            text-align: left;
         }
 
         .dropdown-container {
@@ -41,17 +45,19 @@
         }
 
         .search-input {
-            width: 100%;
-            padding: 12px 15px;
+            width: calc(100% - 40px); /* Ensures equal margins on both sides */
+            padding: 12px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 1rem;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease;
+            background: #f9f9f9;
+            margin: 0 auto; /* Centers the input box within the container */
+            display: block;
         }
 
         .search-input:focus {
-            border-color: #007bff;
+            border-color: #38a7c9;
             outline: none;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
@@ -71,10 +77,11 @@
         }
 
         .dropdown-item {
-            padding: 10px 15px;
+            padding: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-size: 1rem;
+            color: #333;
+            transition: background-color 0.3s ease;
         }
 
         .dropdown-item:hover {
@@ -84,39 +91,62 @@
         .available {
             color: green;
             font-weight: bold;
+            font-size: 1.2rem; /* Enlarged text */
         }
 
         .unavailable {
             color: red;
             font-weight: bold;
+            font-size: 1.2rem; /* Enlarged text */
         }
 
         .staff-info {
             margin-top: 20px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             background: #f8f9fa;
-            padding: 15px;
+            padding: 20px; /* Increased padding for clarity */
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .staff-info p {
-            margin: 5px 0;
+            margin: 8px 0;
         }
 
         button {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #0077b6;
+            color: white;
             border: none;
             padding: 10px 15px;
             border-radius: 5px;
             font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin: 0 auto; /* Centers the button within the container */
+            display: block;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #005f92;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            button {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+
+            .search-input {
+                font-size: 0.9rem;
+            }
+
+            .dropdown-item {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -149,6 +179,7 @@
         <div class="staff-info">
             <p><strong>Name:</strong> {{ selected_staff.name }}</p>
             <p><strong>Room:</strong> {{ selected_staff.room }}</p>
+            <p><strong>Current Location:</strong> {{ selected_staff.location }}</p>
             <p><strong>Availability:</strong> 
                 {% if selected_staff.availability == 1 %}
                     <span class="available">Available</span>
