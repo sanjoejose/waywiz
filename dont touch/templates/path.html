@@ -9,22 +9,165 @@
 <body>
     <div class="container">
         <h1>Shortest Path Finder</h1>
-        <form id="pathForm">
-            <label for="start">Start Node:</label>
-            <input type="number" id="start" name="start" required>
-            
-            <label for="end">End Node:</label>
-            <input type="number" id="end" name="end" required>
-            
-            <button type="submit">Find Path</button>
-        </form>
+        
+        <!-- Screen 1: QR Code Scanner -->
+        <div id="qrScreen">
+            <p>Click below to scan the QR code for the Start Node:</p>
+            <button id="scanButton">Scan QR Code</button>
+            <video id="camera" style="display:none; width: 100%; max-height: 300px; margin-top: 10px; border-radius: 5px; border: 2px solid #0077b6;" autoplay></video>
+            <p id="scanMessage" style="margin-top: 10px;">Awaiting QR code scan...</p>
+        </div>
+
+        <!-- Screen 2: End Node Input -->
+        <div id="endNodeScreen" style="display: none;">
+            <form id="pathForm">
+                <label for="end">End Node:</label>
+                <input type="number" id="end" name="end" required>
+                <button type="submit">Find Path</button>
+            </form>
+        </div>
+        
+        <!-- Path Info -->
         <div id="result">
             <p id="pathInfo"></p>
-            <p id="currentStep"></p>
-            <button id="nextButton" style="display:none;">Next Node</button>
-            <button type="submit" onclick="location.href='{{ url_for('select') }}'">Home</button>
+            <div id="currentStep"></div>
+            <button id="nextButton" style="display:none;">Next Step</button>
         </div>
+        <button type="submit" onclick="location.href='{{ url_for('select') }}'">Home</button>
     </div>
-    <script src="/static/script.js"></script>
+
+    <!-- Include jsQR library -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <script>
+        const scanButton = document.getElementById('scanButton');
+        const qrScreen = document.getElementById('qrScreen');
+        const endNodeScreen = document.getElementById('endNodeScreen');
+        const camera = document.getElementById('camera');
+        const scanMessage = document.getElementById('scanMessage');
+        const pathForm = document.getElementById('pathForm');
+        const pathInfo = document.getElementById('pathInfo');
+        const currentStep = document.getElementById('currentStep');
+        const nextButton = document.getElementById('nextButton');
+
+        let startNode = null;
+
+        // Start the camera for QR scanning
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                .then(stream => {
+                    camera.srcObject = stream;
+                    camera.style.display = 'block';
+                    scanMessage.textContent = 'Scanning for QR code...';
+                    requestAnimationFrame(scanQR);
+                })
+                .catch(err => {
+                    alert('Error accessing the camera: ' + err);
+                });
+        }
+
+        // Stop the camera
+        function stopCamera() {
+            const stream = camera.srcObject;
+            if (stream) {
+                const tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+            }
+            camera.style.display = 'none';
+        }
+
+        // Scan QR codes
+        function scanQR() {
+            if (camera.readyState === camera.HAVE_ENOUGH_DATA) {
+                const canvas = document.createElement('canvas');
+                canvas.width = camera.videoWidth;
+                canvas.height = camera.videoHeight;
+                const context = canvas.getContext('2d');
+                context.drawImage(camera, 0, 0, canvas.width, canvas.height);
+
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                if (code) {
+                    startNode = parseInt(code.data, 10);
+                    if (!isNaN(startNode)) {
+                        stopCamera();
+                        qrScreen.style.display = 'none';
+                        endNodeScreen.style.display = 'block';
+                    } else {
+                        scanMessage.textContent = 'Invalid QR code data. Try again.';
+                    }
+                    return;
+                }
+            }
+            requestAnimationFrame(scanQR);
+        }
+
+        // Handle the QR scan button click
+        scanButton.addEventListener('click', startCamera);
+
+        // Handle the shortest path form submission
+        pathForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const endNode = parseInt(document.getElementById('end').value, 10);
+
+            if (isNaN(startNode) || isNaN(endNode)) {
+                pathInfo.textContent = 'Error: Invalid start or end node.';
+                return;
+            }
+
+            pathInfo.innerHTML = 'Calculating...';
+            currentStep.innerHTML = '';
+            nextButton.style.display = 'none';
+
+            try {
+                // Send a POST request to the Flask backend's /shortest-path route
+                const response = await fetch('/shortest-path', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ start: startNode, end: endNode })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    pathInfo.innerHTML = 'Error: ' + data.error;
+                } else {
+                    pathInfo.innerHTML = `
+                        <p>Shortest Path: ${data.path.join(' -> ')}</p>
+                        <p>Total Distance: ${data.distance} units</p>
+                    `;
+
+                    let directions = data.directions;
+                    let currentStepIndex = 0;
+
+                    function showNextStep() {
+                        if (currentStepIndex < directions.length) {
+                            const directionText = `Node ${data.path[currentStepIndex + 1]}: ${directions[currentStepIndex]}`;
+                            currentStep.innerHTML = directionText;
+                            speak(directionText); // Call speak function for audio guidance
+                            currentStepIndex++;
+                        } else {
+                            currentStep.innerHTML = '<span class="destination-message">You have reached your destination!</span>';
+                            speak('You have reached your destination!');
+                            nextButton.style.display = 'none';
+                        }
+                    }
+
+                    function speak(text) {
+                        const utterance = new SpeechSynthesisUtterance(text);
+                        window.speechSynthesis.speak(utterance);
+                    }
+
+                    showNextStep();
+                    nextButton.style.display = 'inline';
+                    nextButton.onclick = showNextStep;
+                }
+            } catch (error) {
+                pathInfo.innerHTML = 'Error: Unable to fetch data from the backend';
+            }
+        });
+    </script>
 </body>
 </html>
