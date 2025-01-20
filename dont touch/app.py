@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify, redirect, url_for
+from flask import Flask, request, render_template, jsonify, redirect, url_for,session
 import mysql.connector
 import heapq
 
@@ -127,7 +127,7 @@ def availability_status():
     if request.method == 'POST':
         # Get selected staff name from the form
         selected_name = request.form['staff_name']
-        cursor.execute("SELECT name, room, availability FROM staff WHERE name = %s", (selected_name,))
+        cursor.execute("SELECT name, room, location, availability FROM staff WHERE name = %s", (selected_name,))
         selected_staff = cursor.fetchone()
     else:
         selected_staff = None
@@ -146,25 +146,56 @@ def availability_status():
     )
 
 
-# Route for Updating Availability
 @app.route('/update_availability', methods=['POST'])
 def update_availability():
     data = request.get_json()
     college_id = data.get('college_id')
     availability = data.get('availability')
 
-    # Update availability in the database
+    # Connect to the database
     conn = get_db_connection()
     cursor = conn.cursor()
+
+    # First, update the availability in the database
     cursor.execute(
         "UPDATE staff SET availability = %s WHERE college_id = %s",
         (availability, college_id)
     )
+
+    # If availability is set to 0, update the location with the room value
+    if availability == 0:
+        cursor.execute(
+            "UPDATE staff SET location = room WHERE college_id = %s",
+            (college_id,)
+        )
+
+    # Commit the changes and close the connection
     conn.commit()
     cursor.close()
     conn.close()
 
     return jsonify({"message": "Availability updated successfully!"})
+
+
+# Route for Updating Location
+@app.route('/update_location', methods=['POST'])
+def update_location():
+    data = request.get_json()
+    college_id = data.get('college_id')
+    location = data.get('location')
+
+    # Update location in the database
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE staff SET location = %s WHERE college_id = %s",
+        (location, college_id)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": "Location updated successfully!"})
 
 
 

@@ -183,13 +183,13 @@ def update_location():
     data = request.get_json()
     college_id = data.get('college_id')
     location = data.get('location')
-
+    availability=data.get('availability')
     # Update location in the database
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "UPDATE staff SET location = %s WHERE college_id = %s",
-        (location, college_id)
+        "UPDATE staff SET location = %s,availability=1 WHERE college_id = %s",
+        (location, college_id),
     )
     conn.commit()
     cursor.close()
