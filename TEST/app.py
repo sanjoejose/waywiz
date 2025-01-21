@@ -41,6 +41,7 @@ g2 = {
     230: [(1050,'straight',210)]
 }
 
+
 unified_graph = {**g1, **g2}
 # Shortest path function
 def shortest_path(graph, start, end):
