@@ -1,0 +1,6 @@
+ALTER TABLE staff MODIFY location int;
+ALTER TABLE staff MODIFY room int;
+ALTER TABLE staff MODIFY role ENUM('admin', 'faculty', 'staff', 'room') DEFAULT 'staff';
+ALTER TABLE staff MODIFY email varchar(100) DEFAULT 'none';
+ALTER TABLE staff MODIFY password_hash varchar(225) DEFAULT 'none';
+insert into staff(college_id,name,role,availability,location,room) VALUES ('RDA106','HOD CSE CABIN','room',1,129,129);
