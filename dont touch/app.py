@@ -35,7 +35,7 @@ g1 = {
     108: [(700, 'straight', 107),(100, 'left', 152),(1397, 'straight', 109),(175, 'right', 126)],
     109: [(175, 'right', 185),(1397, 'straight', 108),(525, 'right', 110),(1400, 'straight', 111),(873, 'right', 152),(700, 'left', 113)],
     110: [(525, 'left', 109),(875, 'right', 111),(50, 'up', 210)],
-    111: [(1400, 'left', 109),(875, 'left', 110),(175, 'right', 105),(700, 'right', 113)],
+    111: [(1400, 'left', 109),(875, 'left', 110),(700, 'right', 113)],
     113: [(700, 'right', 109),(700, 'left', 111)],
     126: [(612, 'right', 107),(175, 'left', 108)],
     129: [(350, 'left', 107),(120, 'right', 151)],
@@ -195,7 +195,7 @@ def availability_status():
         selected_staff = None
 
     # Fetch all staff names and availability for the dropdown
-    cursor.execute("SELECT name, availability FROM staff")
+    cursor.execute("SELECT name, availability FROM staff WHERE college_id like 'C%' ")
     staff_data = cursor.fetchall()
 
     conn.close()
@@ -259,6 +259,23 @@ def update_location():
 
     return jsonify({"message": "Location updated successfully!"})
 
+# Route to Get Staff Names and Locations
+@app.route('/get-staff-locations', methods=['GET'])
+def get_staff_locations():
+    try:
+        # Connect to the database
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        
+        # Query to get names and locations of staff
+        cursor.execute("SELECT name, location FROM staff")
+        staff = cursor.fetchall()
+        conn.close()
+        
+        # Return the data as JSON
+        return jsonify({'staff': staff})
+    except Exception as e:
+        return jsonify({'error': f'Error fetching staff locations: {str(e)}'})
 
 
 @app.route('/select')
