@@ -21,6 +21,40 @@
             display: inline; /* Change this to block, inline, etc., as needed */
             opacity: 1; /* Fully visible */
         }
+
+        .dropdown-menu {
+        position: absolute;
+        margin-left: 4%;
+        width: 10%; /* Matches the width of the input */
+        max-height: 200px; /* Set a max height for scrolling */
+        overflow-y: auto; /* Allows vertical scrolling */
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: none; /* Hidden by default */
+        z-index: 10;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropdown-item {
+        display: block; /* Ensures each item takes up the full width */
+        padding: 10px 15px; /* Adds spacing around the text */
+        cursor: pointer;
+        font-size: 1rem;
+        color: #333;
+        text-align: left; /* Aligns text to the left */
+        transition: background-color 0.3s ease;
+        border-bottom: 1px solid #f0f0f0; /* Optional: separates items visually */
+    }
+
+    .dropdown-item:last-child {
+        border-bottom: none; /* Removes the border for the last item */
+    }
+
+    .dropdown-item:hover {
+        background-color: #f0f0f0; /* Changes background on hover */
+    }
+
     </style>
     
 </head>
@@ -37,13 +71,30 @@
         </div>
 
         <!-- Screen 2: End Node Input -->
+        <!-- Dropdown for End Node -->
         <div id="endNodeScreen" style="display: none;">
             <form id="pathForm">
-                <label for="end">End Node:</label>
-                <input type="number" id="end" name="end" required>
+                <div class="dropdown-container">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        id="searchBar" 
+                        placeholder="Select Destination" 
+                        oninput="filterDropdown()">
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <!-- Options will be dynamically populated here -->
+                    </div>
+                </div>
+                <input type="hidden" name="end" id="selectedEndNode">
                 <button type="submit">Find Path</button>
             </form>
         </div>
+        
+
+
+
+
+
         
         <!-- Path Info -->
         <div id="result">
@@ -614,9 +665,10 @@
         const pathInfo = document.getElementById('pathInfo');
         const currentStep = document.getElementById('currentStep');
         const nextButton = document.getElementById('nextButton');
-
+        const endDropdown = document.getElementById('end'); // Dropdown for the end node
+    
         let startNode = null;
-
+    
         // Start Camera for QR Scanning
         function startCamera() {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
@@ -630,7 +682,7 @@
                     alert('Error accessing the camera: ' + err);
                 });
         }
-
+    
         // Stop Camera
         function stopCamera() {
             const stream = camera.srcObject;
@@ -640,7 +692,7 @@
             }
             camera.style.display = 'none';
         }
-
+    
         // Scan QR Code
         function scanQR() {
             if (camera.readyState === camera.HAVE_ENOUGH_DATA) {
@@ -649,16 +701,17 @@
                 canvas.height = camera.videoHeight;
                 const context = canvas.getContext('2d');
                 context.drawImage(camera, 0, 0, canvas.width, canvas.height);
-
+    
                 const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
-
+    
                 if (code) {
                     startNode = parseInt(code.data, 10);
                     if (!isNaN(startNode)) {
                         stopCamera();
                         qrScreen.style.display = 'none';
                         endNodeScreen.style.display = 'block';
+                        populateDropdown(); // Populate the dropdown when moving to the next screen
                     } else {
                         scanMessage.textContent = 'Invalid QR code data. Try again.';
                     }
@@ -667,102 +720,173 @@
             }
             requestAnimationFrame(scanQR);
         }
-
+    
         // Add Event Listener for QR Button
         scanButton.addEventListener('click', startCamera);
-
-        // Handle Path Form Submission
-        pathForm.addEventListener('submit', async function (event) {
-            event.preventDefault();
-            const start = startNode || parseInt(document.getElementById('start').value, 10);
-            const end = parseInt(document.getElementById('end').value, 10);
-            const svgContainer = document.getElementById('svgContainer');
-            // To make it visible:
-            svgContainer.style.display = 'block';
-
-
-            if (isNaN(start) || isNaN(end)) {
-                pathInfo.textContent = 'Error: Invalid start or end node.';
-                return;
-            }
-
-            pathInfo.innerHTML = 'Calculating...';
-            currentStep.innerHTML = '';
-            nextButton.style.display = 'none';
-
+    
+        async function populateDropdown() {
             try {
-                // Simulate Fetching Data from Backend
-                const response = await fetch('/shortest-path', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ start, end })
-                });
-
+                const response = await fetch('/get-staff-locations');
                 const data = await response.json();
-
+    
                 if (data.error) {
-                    pathInfo.innerHTML = 'Error: ' + data.error;
-                } else {
-                    pathInfo.innerHTML = `
-                        <p>Shortest Path: ${data.path.join(' -> ')}</p>
-                        <p>Total Distance: ${data.distance} units</p>
-                    `;
-
-                    let directions = data.directions;
-                    let currentStepIndex = 0;
-
-                    function showMap() {
-                        const allElements = document.querySelectorAll('.pa');
-                        allElements.forEach(element => element.style.display = 'none');
-
-                        for (let i = 0; i < data.path.length - 1; i++) {
-                            const id = `p${data.path[i]}-${data.path[i + 1]}`;
-                            const element = document.getElementById(id);
-                            if (element) {
-                                showElementWithTransition(element); // Smoothly show elements
-                            }
-                        }
-                    }
-                    function showElementWithTransition(element) {
-                        element.style.display = 'inline'; // Ensure the element takes up space
-                        setTimeout(() => {
-                            element.classList.add('visible'); // Add the visible class for the transition
-                        }, 10); // Slight delay to ensure the display property is applied first
-                    }
-
-                    function hideElementWithTransition(element) {
-                        element.classList.remove('visible'); // Remove visibility (starts fade-out)
-                        setTimeout(() => {
-                            element.style.display = 'none'; // Set display to none after fade-out
-                        }, 500); // Match the transition duration
-                    }
-                    function showNextStep() {
-                        if (currentStepIndex < directions.length) {
-                            const directionText = `Node ${data.path[currentStepIndex + 1]}: ${directions[currentStepIndex]}`;
-                            currentStep.innerHTML = directionText;
-                            speak(directionText);
-                            currentStepIndex++;
-                        } else {
-                            currentStep.innerHTML = 'You have reached your destination!';
-                            nextButton.style.display = 'none';
-                        }
-                    }
-                    function speak(text) {
-                        const utterance = new SpeechSynthesisUtterance(text);
-                        window.speechSynthesis.speak(utterance);
-                    }
-
-                    showMap();
-                    showNextStep();
-                    nextButton.style.display = 'inline';
-                    nextButton.onclick = showNextStep;
+                    alert(data.error);
+                    return;
                 }
+                const dropdownMenu = document.getElementById('dropdownMenu');
+                dropdownMenu.innerHTML = ''; // Reset dropdown menu
+    
+                data.staff.forEach(staff => {
+                    const div = document.createElement('div');
+                    div.className = 'dropdown-item';
+                    div.textContent = staff.name;
+                    div.setAttribute('data-location', staff.location); // Store the location in a data attribute
+                    div.onclick = function () {
+                        selectEndNode(staff.name, staff.location);
+                    };
+                    dropdownMenu.appendChild(div);
+                });
             } catch (error) {
-                pathInfo.innerHTML = 'Error: Unable to fetch data from the backend.';
+                console.error('Error fetching staff locations:', error);
+            }
+        }
+    
+        function selectEndNode(name, location) {
+            const searchBar = document.getElementById('searchBar');
+            const selectedEndNodeInput = document.getElementById('selectedEndNode');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+    
+            searchBar.value = name;
+            selectedEndNodeInput.value = location; // Store the location as the selected value
+            dropdownMenu.style.display = 'none'; // Hide the dropdown
+        }
+    
+        function filterDropdown() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const items = document.getElementById('dropdownMenu').getElementsByClassName('dropdown-item');
+    
+            for (let item of items) {
+                if (item.textContent.toLowerCase().includes(query)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            }
+        }
+    
+        document.getElementById('searchBar').addEventListener('focus', () => {
+            document.getElementById('dropdownMenu').style.display = 'block';
+        });
+    
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown-container')) {
+                document.getElementById('dropdownMenu').style.display = 'none';
             }
         });
+    
+        // Handle Path Form Submission
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const pathForm = document.getElementById('pathForm');
+            pathForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                const start = startNode || parseInt(document.getElementById('start').value, 10);
+                const endElement = document.getElementById('selectedEndNode');
+                if (!endElement) {
+                    console.error('End element not found');
+                    pathInfo.textContent = 'Error: End element not found.';
+                    return;
+                }
+                const end = parseInt(endElement.value, 10);
+                const svgContainer = document.getElementById('svgContainer');
+                svgContainer.style.display = 'block';
+    
+                if (isNaN(start) || isNaN(end)) {
+                    pathInfo.textContent = 'Error: Invalid start or end node.';
+                    return;
+                }
+    
+                pathInfo.innerHTML = 'Calculating...';
+                currentStep.innerHTML = '';
+                nextButton.style.display = 'none';
+    
+                try {
+                    const response = await fetch('/shortest-path', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ start, end })
+                    });
+    
+                    const data = await response.json();
+    
+                    if (data.error) {
+                        pathInfo.innerHTML = 'Error: ' + data.error;
+                    } else {
+                        pathInfo.innerHTML = `
+                            <p>Shortest Path: ${data.path.join(' -> ')}</p>
+                            <p>Total Distance: ${data.distance} units</p>
+                        `;
+    
+                        let directions = data.directions;
+                        let currentStepIndex = 0;
+    
+                        function showMap() {
+                            const allElements = document.querySelectorAll('.pa');
+                            allElements.forEach(element => element.style.display = 'none');
+    
+                            for (let i = 0; i < data.path.length - 1; i++) {
+                                const id = `p${data.path[i]}-${data.path[i + 1]}`;
+                                const element = document.getElementById(id);
+                                if (element) {
+                                    showElementWithTransition(element);
+                                }
+                            }
+                        }
+    
+                        function showElementWithTransition(element) {
+                            element.style.display = 'inline';
+                            setTimeout(() => {
+                                element.classList.add('visible');
+                            }, 10);
+                        }
+    
+                        function hideElementWithTransition(element) {
+                            element.classList.remove('visible');
+                            setTimeout(() => {
+                                element.style.display = 'none';
+                            }, 500);
+                        }
+    
+                        function showNextStep() {
+                            if (currentStepIndex < directions.length) {
+                                const directionText = `Node ${data.path[currentStepIndex + 1]}: ${directions[currentStepIndex]}`;
+                                currentStep.innerHTML = directionText;
+                                speak(directionText);
+                                currentStepIndex++;
+                            } else {
+                                currentStep.innerHTML = 'You have reached your destination!';
+                                nextButton.style.display = 'none';
+                            }
+                        }
+    
+                        function speak(text) {
+                            const utterance = new SpeechSynthesisUtterance(text);
+                            window.speechSynthesis.speak(utterance);
+                        }
+    
+                        showMap();
+                        showNextStep();
+                        nextButton.style.display = 'inline';
+                        nextButton.onclick = showNextStep;
+                    }
+                } catch (error) {
+                    pathInfo.innerHTML = 'Error: Unable to fetch data from the backend.';
+                }
+            });
+        });
     </script>
+    
+
 </body>
 </html>

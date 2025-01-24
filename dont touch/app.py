@@ -259,6 +259,23 @@ def update_location():
 
     return jsonify({"message": "Location updated successfully!"})
 
+# Route to Get Staff Names and Locations
+@app.route('/get-staff-locations', methods=['GET'])
+def get_staff_locations():
+    try:
+        # Connect to the database
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        
+        # Query to get names and locations of staff
+        cursor.execute("SELECT name, location FROM staff")
+        staff = cursor.fetchall()
+        conn.close()
+        
+        # Return the data as JSON
+        return jsonify({'staff': staff})
+    except Exception as e:
+        return jsonify({'error': f'Error fetching staff locations: {str(e)}'})
 
 
 @app.route('/select')
