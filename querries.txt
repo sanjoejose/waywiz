@@ -1,3 +1,6 @@
+update staff set location='101', room='101' where college_id='C12345';
+update staff set location='102', room='102' where college_id='C12346';
+
 ALTER TABLE staff MODIFY location int;
 ALTER TABLE staff MODIFY room int;
 ALTER TABLE staff MODIFY role ENUM('admin', 'faculty', 'staff', 'room') DEFAULT 'staff';
@@ -27,3 +30,6 @@ insert into staff(college_id,name,role,availability,location,room) VALUES ('RDA3
 insert into staff(college_id,name,role,availability,location,room) VALUES ('RDA303','IT LAB 3','room',1,328,328);
 insert into staff(college_id,name,role,availability,location,room) VALUES ('RDA302','FACULTY ROOM 5','room',1,327,327);
 insert into staff(college_id,name,role,availability,location,room) VALUES ('RDA301','GENTS TOILET','room',1,326,326);
+
+update staff set college_id='E123', password_hash='p123' where college_id='C12345';
+update staff set college_id='E124', password_hash='p124' where college_id='C12346';
