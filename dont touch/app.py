@@ -211,7 +211,7 @@ def availability_status():
         selected_staff = None
 
     # Fetch all staff names and availability for the dropdown
-    cursor.execute("SELECT name, availability FROM staff WHERE college_id like 'C%' ")
+    cursor.execute("SELECT name, availability FROM staff WHERE college_id like 'E%' ")
     staff_data = cursor.fetchall()
 
     conn.close()
