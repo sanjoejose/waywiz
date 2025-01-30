@@ -33,3 +33,26 @@ insert into staff(college_id,name,role,availability,location,room) VALUES ('RDA3
 
 update staff set college_id='E123', password_hash='p123' where college_id='C12345';
 update staff set college_id='E124', password_hash='p124' where college_id='C12346';
+
+
+DELETE FROM staff WHERE college_id = 'E123';
+DELETE FROM staff WHERE college_id = 'E124';
+insert into staff(college_id,name,password_hash,availability,location,room) VALUES ('E1001','HOD-CSE','p1001',1,129,129);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1002', 'Dr. Amal M R', 'p1002', 1, 126, 126);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1003', 'Anu Rose Joy', 'p1003', 1, 126, 126);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1004', 'Anishamol Abraham', 'p1004', 1, 126, 126);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1005', 'Rajesh Kumar', 'p1005', 1, 126, 126);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1007', 'Tintu Alphonsa Thomas', 'p1007', 1, 152, 152);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1006', 'Midhun P Mathew', 'p1006', 1, 126, 126);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1008', 'Honey Joseph', 'p1008', 1, 152, 152);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1009', 'Lis Jose', 'p1009', 1, 152, 152);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1010', 'Minu Cherian', 'p1010', 1, 152, 152);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1011', 'Niya Joseph', 'p1011', 1, 113, 113);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1012', 'Dr. Sinciya P O', 'p1012', 1, 113, 113);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1013', 'Fabeela Ali Rawther', 'p1013', 1, 113, 113);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1014', 'Syam Gopi', 'p1014', 1, 113, 113);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1015', 'Shiney Thomas', 'p1015', 1, 113, 113);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1016', 'Elisabeth Thomas', 'p1016', 1, 113, 113);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1017', 'Bini M Issac', 'p1017', 1, 113, 113);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1018', 'Neenu R', 'p1018', 1, 113, 113);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1019', 'Resmipriya M G', 'p1019', 1, 113, 113);
