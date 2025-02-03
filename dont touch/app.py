@@ -182,7 +182,7 @@ def login():
         # Connect to the database
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM staff WHERE college_id = %s", (college_id,))
+        cursor.execute("SELECT f.*, l.name AS loc FROM staff f  LEFT JOIN staff l ON f.location = l.room AND l.college_id LIKE 'R%'  WHERE f.college_id = %s;", (college_id,))
         user = cursor.fetchone()
         conn.close()
 
@@ -205,7 +205,7 @@ def availability_status():
     if request.method == 'POST':
         # Get selected staff name from the form
         selected_name = request.form['staff_name']
-        cursor.execute("SELECT name, room, location, availability FROM staff WHERE name = %s", (selected_name,))
+        cursor.execute("SELECT f.name, r.name AS room, l.name AS location, f.availability  FROM staff f LEFT JOIN staff r ON f.room = r.room AND r.college_id LIKE 'R%'  LEFT JOIN staff l ON f.location = l.room AND l.college_id LIKE 'R%' WHERE f.name = %s;  ", (selected_name,))
         selected_staff = cursor.fetchone()
     else:
         selected_staff = None
