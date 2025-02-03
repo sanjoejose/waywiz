@@ -56,3 +56,21 @@ INSERT INTO staff(college_id, name, password_hash, availability, location, room)
 INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1017', 'Bini M Issac', 'p1017', 1, 113, 113);
 INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1018', 'Neenu R', 'p1018', 1, 113, 113);
 INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES ('E1019', 'Resmipriya M G', 'p1019', 1, 113, 113);
+
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES 
+('E1101', 'HOD-IT', 'p1101', 1, 148, 148),
+('E1102', 'Midhuna Jyothi R', 'p1102', 1, 149, 149),
+('E1103', 'Saumya Sadanandan', 'p1103', 1, 149, 149),
+('E1104', 'Jincy Lukose', 'p1104', 1, 150, 150),
+('E1105', 'Jintu Ann John', 'p1105', 1, 150, 150),
+('E1106', 'Selin Sam', 'p1106', 1, 150, 150),
+('E1107', 'Dr. Scaria Alex', 'p1107', 1, 135, 135),
+('E1108', 'Tojin Xavier', 'p1108', 1, 227, 227),
+('E1109', 'P G Renjithkumar', 'p1109', 1, 228, 228),
+('E1110', 'Jaison Mathew John', 'p1110', 1, 228, 228),
+('E1111', 'Mini Joswin', 'p1111', 1, 229, 229),
+('E1112', 'Jyothikumari P', 'p1112', 1, 230, 230),
+('E1113', 'Rajimol Raju', 'p1113', 1, 329, 329);
+INSERT INTO staff(college_id, name, password_hash, availability, location, room) VALUES 
+('E1114', 'Jisha Babu', 'p1114', 1, 329, 329),
+('E1115', 'Thomas Varghese', 'p1115', 1, 328, 328);
