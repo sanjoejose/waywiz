@@ -14,15 +14,16 @@ graphs = {
     }
 }
 
-# Define inter-floor links (staircases)
+
 inter_floor_links = {
-    (101001, 102001): 10,  # Staircase between Floor 1 and Floor 2
+    (101001, 102001): 10, 
+    (102001, 101001): 10, 
 }
 
-# Dijkstra's algorithm to find the shortest path
+
 def dijkstra(graph, start, end):
     pq = [] 
-    heapq.heappush(pq, (0, start))  # (cost, node)
+    heapq.heappush(pq, (0, start))  
     
     distances = {node: float('inf') for node in graph}
     distances[start] = 0
