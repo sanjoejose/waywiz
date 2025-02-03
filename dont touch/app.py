@@ -86,40 +86,40 @@ g2 = {
     232: [ (625, 'right', 223), (450, 'left', 224)],
 }
 
-g3 = {
-    300: [(162,'straight',301),(437,'right',303),(50,'straight',302)],
-    301: [(162,'straight',300),(437,'left',319)],
-    302: [(50,'straight',300),(50, 'down', 202)],
-    303: [(437,'left',300),(437,'right',306)],
-    304: [(50,'straight',306),(50, 'down', 204)],
-    305: [(437,'right',307),(162,'straight',306)],
-    306: [(437,'left',303),(50,'straight',304),(162,'straight',305)],
-    307: [(437,'left',305),(730,'straight',309),(550,'left',318)],
-    309: [(730,'straight',307),(20,'left',317),(262,'straight',311),(50,'right',318)],
-    310: [(525,'right',313),(350,'left',312),(50, 'down', 210)],
-    311: [(262,'straight',309),(225,'left',316),(700,'straight',312),(262,'right',317)],
-    312: [(350,'right',310),(700,'straight',311),(1050,'straight',313),(350,'right',316)],
-    313: [(525,'left',310),(1050,'straight',312),(30,'left',331),(262,'straight',314)],
-    314: [(575,'left',315),(262,'right',331),(262,'straight',313)],
-    315: [(575,'right',314)],
-    316: [(225,'right',311),(350,'left',312)],
-    317: [(20,'right',309),(262,'left',311)],
-    318: [(550,'right',307),(50,'left',309)],
-    319: [(437,'left',301),(612,'right',330),(962,'straight',321)],
-    321: [(962,'straight',319),(502,'right',329),(522,'straight',322),(150,'left',330)],
-    322: [(522,'straight',321),(30,'left',329),(437,'straight',323),(50,'right',328)],
-    323: [(437,'straight',322),(962,'straight',324),(350,'left',332)],
-    324: [(962,'straight',323),(525,'right',332),(30,'right',327),(262,'straight',325)],
-    325: [(262,'straight',324),(252,'left',327)],
-    327: [(30,'left',324),(252,'right',325)],
-    328: [(50,'left',322)],
-    329: [(502,'left',321),(30,'right',322)],
-    330: [(612,'left',319),(150,'right',321)],
-    331: [(262,'left',314),(30,'right',313)],
-    332: [(350,'right',323),(525,'left',324),(50, 'down', 232)]
-}
+# g3 = {
+#     300: [(162,'straight',301),(437,'right',303),(50,'straight',302)],
+#     301: [(162,'straight',300),(437,'left',319)],
+#     302: [(50,'straight',300),(50, 'down', 202)],
+#     303: [(437,'left',300),(437,'right',306)],
+#     304: [(50,'straight',306),(50, 'down', 204)],
+#     305: [(437,'right',307),(162,'straight',306)],
+#     306: [(437,'left',303),(50,'straight',304),(162,'straight',305)],
+#     307: [(437,'left',305),(730,'straight',309),(550,'left',318)],
+#     309: [(730,'straight',307),(20,'left',317),(262,'straight',311),(50,'right',318)],
+#     310: [(525,'right',313),(350,'left',312),(50, 'down', 210)],
+#     311: [(262,'straight',309),(225,'left',316),(700,'straight',312),(262,'right',317)],
+#     312: [(350,'right',310),(700,'straight',311),(1050,'straight',313),(350,'right',316)],
+#     313: [(525,'left',310),(1050,'straight',312),(30,'left',331),(262,'straight',314)],
+#     314: [(575,'left',315),(262,'right',331),(262,'straight',313)],
+#     315: [(575,'right',314)],
+#     316: [(225,'right',311),(350,'left',312)],
+#     317: [(20,'right',309),(262,'left',311)],
+#     318: [(550,'right',307),(50,'left',309)],
+#     319: [(437,'left',301),(612,'right',330),(962,'straight',321)],
+#     321: [(962,'straight',319),(502,'right',329),(522,'straight',322),(150,'left',330)],
+#     322: [(522,'straight',321),(30,'left',329),(437,'straight',323),(50,'right',328)],
+#     323: [(437,'straight',322),(962,'straight',324),(350,'left',332)],
+#     324: [(962,'straight',323),(525,'right',332),(30,'right',327),(262,'straight',325)],
+#     325: [(262,'straight',324),(252,'left',327)],
+#     327: [(30,'left',324),(252,'right',325)],
+#     328: [(50,'left',322)],
+#     329: [(502,'left',321),(30,'right',322)],
+#     330: [(612,'left',319),(150,'right',321)],
+#     331: [(262,'left',314),(30,'right',313)],
+#     332: [(350,'right',323),(525,'left',324),(50, 'down', 232)]
+# }
 
-unified_graph = {**g1, **g2, **g3}
+unified_graph = {**g1, **g2}
 # Shortest path function
 def shortest_path(graph, start, end):
     queue = [(0, start, [], [])]
@@ -284,7 +284,7 @@ def get_staff_locations():
         cursor = conn.cursor(dictionary=True)
         
         # Query to get names and locations of staff
-        cursor.execute("SELECT name, location FROM staff")
+        cursor.execute("SELECT name, location FROM staff where location < 300")
         staff = cursor.fetchall()
         conn.close()
         
