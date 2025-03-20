@@ -1,0 +1,306 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 60px 0; /* Add padding for sticky header and footer */
+    background-color: #1F293A;
+    min-height: 100vh;
+    color: rgb(142, 162, 218);
+}
+
+.container {
+    text-align: center;
+    max-width: 400px;
+    background: #1F293A;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Center horizontally */
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.container:hover {
+    background: #2a3549;
+    color: rgb(162, 182, 238);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: rgb(142, 162, 218);
+    transition: color 0.5s ease;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: rgb(17, 17, 56);
+    color: rgb(228, 231, 238);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: rgb(27, 27, 86);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: rgb(142, 162, 218);
+    padding: 10px;
+}
+
+.destination-message {
+    color: rgb(164, 215, 124);
+    font-weight: bold;
+    font-size: larger;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+/* Sticky elements styling */
+.sticky-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1F293A;
+    color: rgb(142, 162, 218);
+    padding: 15px;
+    text-align: center;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1F293A;
+    color: rgb(142, 162, 218);
+    padding: 15px;
+    text-align: center;
+    z-index: 100;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* SVG container styling */
+#svgContainer {
+    width: 100%;
+    height: calc(100vh - 180px); /* Full viewport height minus header/footer */
+    overflow: auto;
+    margin: 60px auto 70px auto; /* Space for header and footer */
+    position: relative;
+    background-color: #121824;
+    border-radius: 5px;
+}
+
+#svgContainer svg {
+    display: block;
+    margin: 0 auto;
+    transform-origin: top left;
+}
+
+/* Zoom controls styling */
+.zoom-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.zoom-controls button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(142, 162, 218, 0.3);
+    border-radius: 50%;
+    border-top-color: rgb(142, 162, 218);
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Search input styling */
+.search-input {
+    padding: 10px 15px;
+    width: 100%;
+    border: 2px solid #121824;
+    border-radius: 5px;
+    background-color: #2a3549;
+    color: rgb(228, 231, 238);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4b5e89;
+}
+
+.search-input::placeholder {
+    color: rgba(228, 231, 238, 0.6);
+}
+
+/* Dropdown styling enhancements */
+.dropdown-container {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown-menu {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: #2a3549;
+    border: 1px solid #4b5e89;
+    border-radius: 5px;
+    display: none;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    scrollbar-width: thin;
+    scrollbar-color: #4b5e89 #2a3549;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: rgb(228, 231, 238);
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #1F293A;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background-color: #384563;
+}
+
+/* SVG path highlighting */
+.pa {
+    stroke-width: 3;
+    transition: stroke-width 0.3s ease;
+}
+
+.pa:hover {
+    stroke-width: 5;
+}
+
+.highlight {
+    display: inline;
+    fill: #9dcffa;
+    fill-opacity: 0.8;
+    animation: highlight-pulse 2s infinite;
+}
+
+@keyframes highlight-pulse {
+    0% { fill-opacity: 0.6; }
+    50% { fill-opacity: 1; }
+    100% { fill-opacity: 0.6; }
+}
+
+.highlight-animation {
+    animation: fade-in 0.5s ease-out;
+}
+
+@keyframes fade-in {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+
+/* Current node styling */
+.current-node {
+    stroke: #ff7e5f !important;
+    stroke-width: 3 !important;
+    animation: node-pulse 1.5s infinite;
+}
+
+@keyframes node-pulse {
+    0% { stroke-width: 2; }
+    50% { stroke-width: 4; }
+    100% { stroke-width: 2; }
+}
+
+/* Floor indicator */
+.floor-indicator {
+    background-color: rgba(31, 41, 58, 0.9) !important;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+/* Progress indicator */
+#progressIndicator {
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* Navigation buttons */
+#nextButton, #backButton {
+    padding: 8px 15px;
+    margin: 10px 5px;
+    min-width: 120px;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .container {
+        max-width: 95%;
+    }
+    
+    #svgContainer {
+        height: calc(100vh - 220px);
+    }
+    
+    .sticky-bar, .sticky-footer {
+        padding: 10px;
+    }
+}
+
+/* Even smaller screens like phones */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 70px 0;
+    }
+    
+    #svgContainer {
+        height: calc(100vh - 250px);
+    }
+    
+    .zoom-controls {
+        flex-direction: row;
+        right: 10px;
+        bottom: 10px;
+        top: auto;
+    }
+}

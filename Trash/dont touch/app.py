@@ -25,78 +25,78 @@ app = Flask(__name__)
 
 g1 = {
     100: [(1325, 'straight', 103)],
-    101: [(460, 'right', 105),(295, 'right', 148),(875, 'straight', 107)],
-    102: [(1020, 'right', 103),(1020, 'left', 105),(50, 'up', 202)],
-    103: [(1325, 'straight', 100),(1020, 'left', 102),(1020, 'straight', 104),(462, 'straight', 105)],
-    104: [(1020, 'straight', 103),(1020, 'right', 105),(50, 'up', 204)],
-    105: [(460, 'left', 101),(1020, 'right', 102),(462, 'straight', 103),(1020, 'left', 104),(450, 'right', 151),(975, 'right', 107),(975, 'left', 106)],
-    106: [(975, 'right', 105),(850, 'left', 149),(875, 'straight', 151),(470, 'left', 148),(1400, 'straight', 107),(700, 'straight', 130)],
-    107: [(875, 'straight', 101),(975, 'left', 105),(1400, 'straight', 106),(470, 'right', 129),(700, 'straight', 108),(850, 'left', 126)],
-    108: [(700, 'straight', 107),(450, 'left', 152),(1050, 'straight', 109),(325, 'right', 126)],
-    109: [(1050, 'straight', 108),(525, 'right', 110),(1400, 'straight', 111),(800, 'right', 152),(850, 'left', 113)],
-    110: [(525, 'left', 109),(875, 'right', 111),(50, 'up', 210),(400, 'straight', 113)],
-    111: [(1400, 'left', 109),(875, 'left', 110),(850, 'right', 113)],
-    113: [(850, 'right', 109),(850, 'left', 111),(400, 'straight', 110)],
-    126: [(850, 'right', 107),(325, 'left', 108)],
-    129: [(470, 'left', 107),(325, 'right', 151)],
-    130: [(700, 'straight', 106),(450, 'right', 150),(1050, 'straight', 131),(325, 'left', 149)],
-    131: [(1050, 'left', 130),(800,'right', 150),(525, 'left', 132),(850, 'right', 135),(1400, 'straight', 133)],
-    132: [(525, 'right', 131),(875, 'left', 133),(50, 'up',232),(400, 'straight', 135)],
-    133: [(1400, 'straight', 131),(875, 'right', 132),(850, 'straight', 135)],
-    135: [(850, 'left', 131),(850, 'straight', 133),(400, 'straight', 132)],
-    148: [(295, 'left', 101),(470, 'right', 106)],
-    149: [(850, 'right', 106),(325, 'right', 130)],
-    150: [(450, 'left', 130),(800, 'left', 131)],
-    151: [(450, 'left', 105),(875, 'straight', 106),(325, 'left', 129)],
-    152: [(450, 'right', 108),(800, 'left', 109)]
+    101: [(175, 'right', 105),(120, 'right', 148),(875, 'straight', 107)],
+    102: [(525, 'right', 103),(525, 'left', 105),(50, 'up', 202)],
+    103: [(1325, 'straight', 100),(525, 'left', 102),(525, 'straight', 104),(462, 'straight', 105)],
+    104: [(525, 'straight', 103),(525, 'right', 105),(50, 'up', 204)],
+    105: [(175, 'left', 101),(525, 'right', 102),(462, 'straight', 103),(525, 'left', 104),(325, 'right', 151),(325, 'right', 107),(700, 'left', 106)],
+    106: [(700, 'right', 105),(850, 'left', 149),(875, 'straight', 151),(295, 'left', 148),(1225, 'straight', 107),(875, 'straight', 130)],
+    107: [(875, 'straight', 101),(325, 'left', 105),(1225, 'straight', 106),(350, 'right', 129),(700, 'straight', 108),(612, 'left', 126)],
+    108: [(700, 'straight', 107),(100, 'left', 152),(1397, 'straight', 109),(175, 'right', 126)],
+    109: [(175, 'right', 185),(1397, 'straight', 108),(525, 'right', 110),(1400, 'straight', 111),(873, 'right', 152),(700, 'left', 113)],
+    110: [(525, 'left', 109),(875, 'right', 111),(50, 'up', 210)],
+    111: [(1400, 'left', 109),(875, 'left', 110),(700, 'right', 113)],
+    113: [(700, 'right', 109),(700, 'left', 111)],
+    126: [(612, 'right', 107),(175, 'left', 108)],
+    129: [(350, 'left', 107),(120, 'right', 151)],
+    130: [(875, 'straight', 106),(100, 'right', 150),(643, 'straight', 131),(120, 'left', 149)],
+    131: [(643, 'left', 130),(785, 'right', 150),(525, 'left', 132),(700, 'right', 135),(1400, 'straight', 133)],
+    132: [(525, 'right', 131),(787, 'left', 133),(50, 'up',232)],
+    133: [(1400, 'straight', 131),(787, 'right', 132),(350, 'straight', 135)],
+    135: [(700, 'left', 131),(350, 'straight', 133)],
+    148: [(120, 'left', 101),(295, 'right', 106)],
+    149: [(850, 'right', 106),(120, 'right', 130)],
+    150: [(100, 'left', 130),(785, 'left', 131)],
+    151: [(325, 'left', 105),(875, 'straight', 106),(120, 'left', 129)],
+    152: [(100, 'right', 108),(873, 'left', 109)]
 }
 
 g2 = {
-    200: [ (625, 'right', 202), (525, 'right',203)],
-    201: [ (625, 'right', 202), (460, 'left', 219)],
-    202: [ (625, 'left', 201), (625, 'left', 200)],
-    203: [ (525, 'right', 206), (985, 'left then right', 207), (525, 'left', 200), (985, 'left then right', 219)],
-    204: [ (625, 'right', 206), (625, 'right', 205)],
-    205: [ (460, 'right', 207), (625, 'left', 204)],
-    206: [ (525, 'left', 203), (625, 'left', 204)],
-    207: [ (350, 'straight', 208), (460, 'left', 205), (985, 'right then left', 203)],
-    208: [ (525, 'straight', 209), (550, 'left', 218), (350, 'straight', 207)],
-    209: [ (350, 'straight', 211), (210, 'left', 217), (375, 'right', 218), (525, 'straight', 208)],
-    210: [ (625, 'left', 212), (625, 'right', 213),(50, 'down', 110),(50, 'up', 310)],
-    211: [ (700, 'straight', 212), (550, 'left', 216), (550, 'right', 217), (350, 'straight', 209)],
-    212: [ (1050, 'straight', 213), (550, 'right', 216), (625, 'right', 210), (700, 'straight', 211)],
-    213: [ (450, 'left', 214), (800, 'straight', 215), (625, 'left', 210), (1050, 'straight', 212)],
-    214: [ (550, 'left', 215), (450, 'right', 213)],
-    215: [ (800, 'straight', 213), (550, 'right', 214)],
-    216: [ (550, 'right', 211), (550, 'left', 212)],
-    217: [ (210, 'right', 209), (550, 'left', 211)],
-    218: [ (550, 'right', 208), (375, 'left', 209)],
-    219: [ (985, 'right then left', 203), (350, 'straight', 220), (460, 'right', 201)],
-    220: [ (725, 'right', 230), (525, 'straight', 221), (350, 'straight', 219)],
-    221: [ (350, 'straight', 222), (375, 'left', 230), (210, 'right', 229), (525, 'straight', 220)],
-    222: [ (700, 'straight', 223), (550, 'right', 228), (350, 'straight', 221)],
-    223: [ (550, 'left', 228), (875, 'straight', 224), (625, 'left', 232), (700, 'straight', 222)],
-    224: [ (210, 'right', 227), (350, 'straight', 225), (450, 'right', 232), (875, 'straight', 223)],
-    225: [ (450, 'straight', 226), (440, 'left', 227), (350, 'straight', 224)],
+    200: [ (300, 'right', 202), (700, 'right',203)],
+    201: [ (462, 'right', 202), (287, 'left', 219)],
+    202: [ (462, 'left', 201), (300, 'left', 200)],
+    203: [ (162, 'right', 206), (287, 'left then right', 207), (700, 'left', 200), (287, 'left then right', 219)],
+    204: [ (300, 'right', 206), (462, 'right', 205)],
+    205: [ (287, 'right', 207), (462, 'left', 204)],
+    206: [ (162, 'left', 203), (300, 'left', 204)],
+    207: [ (350, 'straight', 208), (287, 'left', 205), (287, 'right then left', 203)],
+    208: [ (700, 'straight', 209), (850, 'left', 218), (350, 'straight', 207)],
+    209: [ (261, 'straight', 211), (321, 'left', 217), (350, 'right', 218), (700, 'straight', 208)],
+    210: [ (700, 'left', 212), (350, 'right', 213)],
+    211: [ (675, 'straight', 212), (700, 'left', 216), (300, 'right', 217), (261, 'straight', 209)],
+    212: [ (1050, 'straight', 213), (700, 'right', 216), (700, 'right', 210), (675, 'straight', 211)],
+    213: [ (525, 'left', 214), (925, 'straight', 215), (350, 'left', 210), (1050, 'straight', 212)],
+    214: [ (175, 'left', 215), (525, 'right', 213)],
+    215: [ (925, 'straight', 213), (175, 'right', 214)],
+    216: [ (700, 'right', 211), (700, 'left', 212)],
+    217: [ (321, 'right', 209), (300, 'left', 211)],
+    218: [ (850, 'right', 208), (350, 'left', 209)],
+    219: [ (287, 'right then left', 203), (150, 'straight', 220), (287, 'right', 201)],
+    220: [ (875, 'right', 230), (700, 'straight', 221), (150, 'straight', 219)],
+    221: [ (543, 'straight', 222), (400, 'left', 230), (500, 'right', 229), (700, 'straight', 220)],
+    222: [ (750, 'straight', 223), (550, 'right', 228), (543, 'straight', 221)],
+    223: [ (700, 'left', 228), (700, 'straight', 224), (700, 'left', 232), (750, 'straight', 222)],
+    224: [ (700, 'right', 227), (500, 'straight', 225), (200, 'right', 232), (700, 'straight', 223)],
+    225: [ (450, 'straight', 226), (500, 'left', 227), (500, 'straight', 224)],
     226: [ (450, 'straight', 225)],
-    227: [ (210, 'left', 224), (440, 'right', 225)],
-    228: [ (550, 'left', 222), (550, 'right', 223)],
-    229: [ (210, 'left', 221)],
-    230: [ (725, 'left', 220), (375, 'right', 221)],
-    232: [ (625, 'right', 223), (450, 'left', 224)],
+    227: [ (700, 'left', 224), (500, 'right', 225)],
+    228: [ (550, 'left', 222), (700, 'right', 223)],
+    229: [ (500, 'left', 221)],
+    230: [ (875, 'left', 220), (400, 'right', 221)],
+    232: [ (700, 'right', 223), (200, 'left', 224)],
 }
 
 g3 = {
     300: [(162,'straight',301),(437,'right',303),(50,'straight',302)],
     301: [(162,'straight',300),(437,'left',319)],
-    302: [(50,'straight',300),(50, 'down', 202)],
+    302: [(50,'straight',300)],
     303: [(437,'left',300),(437,'right',306)],
-    304: [(50,'straight',306),(50, 'down', 204)],
+    304: [(50,'straight',306)],
     305: [(437,'right',307),(162,'straight',306)],
     306: [(437,'left',303),(50,'straight',304),(162,'straight',305)],
     307: [(437,'left',305),(730,'straight',309),(550,'left',318)],
     309: [(730,'straight',307),(20,'left',317),(262,'straight',311),(50,'right',318)],
-    310: [(525,'right',313),(350,'left',312),(50, 'down', 210)],
+    310: [(525,'right',313),(350,'left',312)],
     311: [(262,'straight',309),(225,'left',316),(700,'straight',312),(262,'right',317)],
     312: [(350,'right',310),(700,'straight',311),(1050,'straight',313),(350,'right',316)],
     313: [(525,'left',310),(1050,'straight',312),(30,'left',331),(262,'straight',314)],
@@ -116,7 +116,7 @@ g3 = {
     329: [(502,'left',321),(30,'right',322)],
     330: [(612,'left',319),(150,'right',321)],
     331: [(262,'left',314),(30,'right',313)],
-    332: [(350,'right',323),(525,'left',324),(50, 'down', 232)]
+    332: [(350,'right',323),(525,'left',324)]
 }
 
 unified_graph = {**g1, **g2, **g3}
@@ -182,7 +182,7 @@ def login():
         # Connect to the database
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT f.*, l.name AS loc FROM staff f  LEFT JOIN staff l ON f.location = l.room AND l.college_id LIKE 'R%'  WHERE f.college_id = %s;", (college_id,))
+        cursor.execute("SELECT * FROM staff WHERE college_id = %s", (college_id,))
         user = cursor.fetchone()
         conn.close()
 
@@ -205,7 +205,7 @@ def availability_status():
     if request.method == 'POST':
         # Get selected staff name from the form
         selected_name = request.form['staff_name']
-        cursor.execute("SELECT f.name, r.name AS room, l.name AS location, f.availability  FROM staff f LEFT JOIN staff r ON f.room = r.room AND r.college_id LIKE 'R%'  LEFT JOIN staff l ON f.location = l.room AND l.college_id LIKE 'R%' WHERE f.name = %s;  ", (selected_name,))
+        cursor.execute("SELECT name, room, location, availability FROM staff WHERE name = %s", (selected_name,))
         selected_staff = cursor.fetchone()
     else:
         selected_staff = None
@@ -284,7 +284,7 @@ def get_staff_locations():
         cursor = conn.cursor(dictionary=True)
         
         # Query to get names and locations of staff
-        cursor.execute("SELECT name, location FROM staff where location < 400")
+        cursor.execute("SELECT name, location FROM staff")
         staff = cursor.fetchall()
         conn.close()
         

@@ -56,3 +56,24 @@ button {
     font-weight: bold; /* Optional: make the text bold */
     font-size: larger;
 }
+#container {
+    position: fixed; /* Keeps it fixed on the screen */
+    top: 10px; /* Adjust this based on where you want it */
+    left: 50%; /* Centers it */
+    transform: translateX(-50%); /* Ensures proper centering */
+    z-index: 1000; /* Ensures it stays on top of the SVG */
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+#svgContainer {
+    width: 100vw;
+    height: 100vh;
+    overflow: auto; /* Enables scrolling */
+    position: relative; /* Ensures it doesn't interfere with fixed elements */
+}
+svg {
+    width: 200%; /* Adjust based on the map size */
+    height: 200%;
+}
